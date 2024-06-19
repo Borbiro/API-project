@@ -1,6 +1,6 @@
 # API-project
 Anime Scout
 
-Ezt a kis alkalmazást egy capstone project miatt készítettem, a myanimelist api-át használtam, hogy létrehozzak egy kereső felületet.
+I made this small application for a capstone project, I used myanimelist api to create a search interface.
 
-# A kivétel kezelést megcsinálni lusta voltam
+# I was too lazy to handle the exception
