@@ -2,9 +2,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Anime Scout</title>
 </head>
 <body>
-    <h1>Hello world</h1>
+    <div class="main">
+        <h1>Anime Scout</h1>
+
+        <div class="filter-container">
+            <form id="myForm" method="post">
+                <label for="min_score">Minimum score:</label>
+                <input type="number" id="min_score" name="min_score" min="0" max="10">
+          
+                <label for="max_score">Maximum score:</label>
+                <input type="number" id="max_score" name="max_score" min="0" max="10">
+
+                <label for="status">Status:</label>
+                <select name="status" id="status">
+                    <option value="">None</option>
+                    <option value="airing">Airing</option>
+                    <option value="complete">Finished Airing</option>
+                    <option value="upcoming">Upcoming</option>
+                </select>
+
+                <label for="type">Type:</label>
+                <select name="type" id="type">
+                    <option value="">None</option>
+                    <option value="tv">Tv</option>
+                    <option value="movie">Movie</option>
+                    <option value="ova">OVA</option>
+                    <option value="special">Special</option>
+                    <option value="ona">ONA</option>
+                    <option value="music">Music</option>
+                </select>
+
+                <label for="year">Year:</label>
+                <input type="number" id="year" name="year" min="1917" max="2024">
+
+                <label for="season">Season:</label>
+                <select name="season" id="season">
+                    <option value="whole">Whole year</option>
+                    <option value="spring">Spring</option>
+                    <option value="summer">Summer</option>
+                    <option value="fall">Fall</option>
+                    <option value="winter">Winter</option>
+                </select>
+                
+                <fieldset>
+                    <legend>Genres</legend>
+                        <div class="genres-select">
+                            <% for (var i = 0; i <=themes.length-1;  i++ ) { %>
+                                <div>
+                                    <input type="checkbox" id=<%= themes[i][0] %> name="theme" value=<%= themes[i][1] %>>
+                                    <label for=<%= themes[i][0] %>><%= themes[i][0] %></label>
+                                </div>
+                            <% } %>
+                        </div>
+                </fieldset>
+
+                <label for="order_by">Order by:</label>
+                <select name="order_by" id="order_by">
+                    <option value="score">Score</option>
+                    <option value="title">Title</option>
+                    <option value="rank">Rank</option>
+                    <option value="popularity">Popularity</option>
+                    <option value="members">Members</option>
+                </select>
+
+                <label for="sort">Sort:</label>
+                <select name="sort" id="sort">
+                    <option value="desc">Desc</option>
+                    <option value="asc">Asc</option>
+                </select>
+                
+                <div class="submit-cont">
+                    <input id="get" type="submit" value="Search" formaction="/get-animes">
+                </div>
+              </form>
+        </div>
+    </div>
+
+    <div class="result-container">
+        <div class="card-container">
+            <% if (locals.data) { %>
+                <h2> <%= totalItems %> result:</h2>
+
+                <ul>
+                    <% for (var i = 0; i <=data.length-1;  i++ ) { %>
+                        <div class="card">
+                            <div class="left">
+                                <img src=<%= data[i]["images"]["jpg"]["image_url"] %> alt="">
+                            </div>
+                            
+                            <div class="mid">
+                                <p class="anime title"><u><%= data[i]["title"] %></u></p>
+                                <p class="english title"><%= data[i]["title_english"] %></p>
+                            </div>
+                
+                            <div class="right">
+                                <p class="score-label">Score:</p>
+                                <p class="score"><%= data[i]["score"] %></p>
+                                <p class="members">Members: <%= data[i]["members"] %></p>
+                            </div>
+                        </div>
+                    <% } %>
+                </ul>
+                <div class="page_buttons">
+                    <form id="myForm" method="post">
+                        <div class="submit-cont">
+                            <input type="text" id="previous_page" name="previous_page" value="true" hidden>
+                            <input id="get" type="submit" value="Previous page" formaction="/get-animes">
+                        </div>
+                    </form>
+
+                    <form id="myForm" method="post">
+                        <div class="submit-cont">
+                            <input type="text" id="next_page" name="next_page" value="true" hidden>
+                            <input id="get" type="submit" value="Next page" formaction="/get-animes">
+                        </div>
+                    </form>
+                </div>
+            <% } else { %>
+                <p>Waiting for data...</p>
+            <% } %>
+        </div>
+    </div>
+
+    </div>
+        
+    </div>
 </body>
 </html>
